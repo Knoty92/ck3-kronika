@@ -17,10 +17,14 @@
       overflow: hidden;
     }
 
-    .page {
+    .slide {
       display: flex;
       flex-direction: column;
       height: 100vh;
+    }
+
+    .slide.hidden {
+      display: none;
     }
 
     /* MAPA — 75 % */
@@ -159,6 +163,49 @@
       color: #e0c978;
     }
 
+    /* NAVIGACE */
+    .nav-controls {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: rgba(90,74,48,0.7);
+      color: #d4c5a0;
+      border: 1px solid #5a4a30;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(90,74,48,1);
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid #5a4a30;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-dot.active {
+      background: #e0c978;
+      border-color: #e0c978;
+    }
+
     @media (max-width: 800px) {
       .info-panel { flex-direction: column; height: 40vh; }
       .map-section { height: 60vh; }
@@ -167,7 +214,8 @@
   </style>
 </head>
 <body>
-  <div class="page">
+  <!-- SLIDE 1: 867 -->
+  <div class="slide" data-slide="1">
     <div class="map-section">
       <img src="map-1.png" alt="Mapa">
       <div class="year-overlay">867</div>
@@ -199,5 +247,91 @@
       </div>
     </div>
   </div>
+
+  <!-- SLIDE 2: 874 -->
+  <div class="slide hidden" data-slide="2">
+    <div class="map-section">
+      <img src="map-2.png" alt="Mapa">
+      <div class="year-overlay">874</div>
+    </div>
+    <div class="info-panel">
+      <div class="player-card">
+        <div class="portrait">
+          <img src="knoty-2.png" alt="Knoty">
+        </div>
+        <div class="text">
+          <div class="name">Knoty</div>
+          <div class="title">Vévoda Český</div>
+          <ul>
+            <li>Země české v <span class="hl">bojiště náboženských válek</span> se proměnily, Vévoda Bavorský na Čechy slovanské udeřil, jemuž na pomoc některé kmeny slovanské přispěchaly, mezi nimi i kmen Krakovský</li>
+          </ul>
+        </div>
+      </div>
+      <div class="player-card">
+        <div class="portrait">
+          <img src="matej-2.png" alt="Matej">
+        </div>
+        <div class="text">
+          <div class="name">Matej</div>
+          <div class="title">Náčelník kmene Krakow</div>
+          <ul>
+            <li>Kmenové polští v <span class="hl">konfederaci nově ustavenou</span> se sdružili, aby rovnováhu v zemích polských zachovali a víru slovanskou před katolíky ubránili. Matej spoluzakládajícím členem se stal po boku náčelníka kmene Polania</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGACE -->
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="prevSlide()">◀</button>
+    <div id="navDots"></div>
+    <button class="nav-btn" onclick="nextSlide()">▶</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(n) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('hidden', i !== n);
+      });
+      currentSlide = n;
+      updateDots();
+    }
+
+    function nextSlide() {
+      showSlide(Math.min(currentSlide + 1, slides.length - 1));
+    }
+
+    function prevSlide() {
+      showSlide(Math.max(currentSlide - 1, 0));
+    }
+
+    function goToSlide(n) {
+      showSlide(n);
+    }
+
+    function updateDots() {
+      document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    // Build dots
+    const dotsContainer = document.getElementById('navDots');
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
 </body>
 </html>
