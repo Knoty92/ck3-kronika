@@ -31,6 +31,7 @@
       justify-content: center;
       background: radial-gradient(ellipse at 20% 50%, rgba(60,40,20,0.3) 0%, transparent 60%);
       padding: 1rem;
+      position: relative;
     }
 
     .map-section img {
@@ -40,6 +41,25 @@
       border-radius: 4px;
       box-shadow: 0 0 40px rgba(0,0,0,0.7);
       object-fit: contain;
+    }
+
+    .year-overlay {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'IM Fell English SC', serif;
+      font-size: 3rem;
+      color: #ffffff;
+      text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+        -0 0 8px rgba(0,0,0,0.5);
+      opacity: 0.9;
+      pointer-events: none;
+      letter-spacing: 0.15em;
     }
 
     /* SPODNÍ PANEL — 25 %, 50/50 */
@@ -150,6 +170,7 @@
   <div class="page">
     <div class="map-section">
       <img src="map-1.png" alt="Mapa">
+      <div class="year-overlay">867</div>
     </div>
     <div class="info-panel">
       <div class="player-card">
