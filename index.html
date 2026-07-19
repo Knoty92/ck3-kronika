@@ -23,14 +23,13 @@
       height: 100vh;
     }
 
-    /* MAP — 75 % výšky */
+    /* MAPA — 75 % */
     .map-section {
       height: 75vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(60,40,20,0.3) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 20% 50%, rgba(60,40,20,0.3) 0%, transparent 60%);
       padding: 1rem;
     }
 
@@ -43,27 +42,36 @@
       object-fit: contain;
     }
 
-    /* SPODNÍ PANEL — 25 % výšky */
+    /* SPODNÍ PANEL — 25 %, 50/50 */
     .info-panel {
       height: 25vh;
       display: flex;
-      align-items: center;
-      gap: 2rem;
-      padding: 0 3rem;
-      background: linear-gradient(0deg, #0d0a07 0%, transparent 100%);
       border-top: 1px solid #3a2a1a;
+      background: linear-gradient(0deg, #0d0a07 0%, transparent 100%);
     }
 
-    .character {
-      flex: 0 0 20%;
-      max-width: 20%;
-      height: 90%;
+    .player-card {
+      flex: 0 0 50%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1.5rem;
+    }
+
+    .player-card:first-child {
+      border-right: 1px solid #2a1f10;
+    }
+
+    .player-card .portrait {
+      flex: 0 0 30%;
+      max-width: 30%;
+      height: 85%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .character img {
+    .player-card .portrait img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
@@ -71,9 +79,9 @@
       border-radius: 3px;
     }
 
-    .character .placeholder {
+    .player-card .portrait .placeholder {
       width: 100%;
-      height: 90%;
+      height: 85%;
       background: linear-gradient(135deg, #2a1f10, #1a1410);
       border: 2px solid #5a4a30;
       border-radius: 3px;
@@ -82,88 +90,59 @@
       justify-content: center;
       color: #5a4a30;
       font-style: italic;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       text-align: center;
-      padding: 0.5rem;
+      padding: 0.3rem;
     }
 
-    .events {
-      flex: 0 0 75%;
-      max-width: 75%;
-      padding: 0.5rem 0;
+    .player-card .text {
+      flex: 0 0 65%;
     }
 
-    .player-name {
+    .player-card .name {
       font-family: 'IM Fell English SC', serif;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: #e0c978;
+      margin-bottom: 0.2rem;
+    }
+
+    .player-card .title {
+      font-size: 0.75rem;
+      color: #8b7355;
+      font-style: italic;
       margin-bottom: 0.5rem;
     }
 
-    .player-title {
-      font-size: 0.85rem;
-      color: #8b7355;
-      font-style: italic;
-      margin-bottom: 0.75rem;
-    }
-
-    .event-list {
+    .player-card ul {
       list-style: none;
       padding: 0;
     }
 
-    .event-list li {
+    .player-card ul li {
       position: relative;
-      padding: 0.35rem 0 0.35rem 1.5rem;
-      font-size: 0.95rem;
-      line-height: 1.4;
+      padding: 0.25rem 0 0.25rem 1.2rem;
+      font-size: 0.8rem;
+      line-height: 1.3;
       color: #c4b590;
     }
 
-    .event-list li::before {
+    .player-card ul li::before {
       content: '❦';
       position: absolute;
       left: 0;
-      top: 0.3rem;
+      top: 0.2rem;
       color: #8b7355;
-      font-size: 0.7rem;
+      font-size: 0.6rem;
     }
 
-    .event-list li .date {
-      font-size: 0.7rem;
-      color: #5a4a30;
-      letter-spacing: 1px;
-      margin-right: 0.3rem;
-      font-style: italic;
-    }
-
-    .event-list li .hl {
+    .player-card ul li .hl {
       color: #e0c978;
     }
 
     @media (max-width: 800px) {
-      .info-panel {
-        flex-direction: column;
-        padding: 0 1rem;
-        gap: 0.5rem;
-      }
-      .character {
-        flex: 0 0 auto;
-        max-width: 30%;
-        height: 40%;
-      }
-      .events {
-        flex: 0 0 auto;
-        max-width: 100%;
-      }
-      .player-name { font-size: 1.1rem; }
-      .event-list li { font-size: 0.8rem; }
-    }
-
-    @media (max-width: 500px) {
+      .info-panel { flex-direction: column; height: 40vh; }
       .map-section { height: 60vh; }
-      .info-panel { height: 40vh; }
-      .character { max-width: 25%; }
+      .player-card { flex: 0 0 50%; padding: 0.3rem 0.8rem; }
     }
   </style>
 </head>
@@ -173,15 +152,29 @@
       <img src="map.png" alt="Mapa">
     </div>
     <div class="info-panel">
-      <div class="character">
-        <img src="knoty.png" alt="Knoty">
+      <div class="player-card">
+        <div class="portrait">
+          <img src="knoty.png" alt="Knoty">
+        </div>
+        <div class="text">
+          <div class="name">Knoty</div>
+          <div class="title">Vévoda Český</div>
+          <ul>
+            <li>Převzal <span class="hl">kontrolu nad českým knížectvím</span></li>
+          </ul>
+        </div>
       </div>
-      <div class="events">
-        <div class="player-name">Knoty</div>
-        <div class="player-title">Vévoda Český</div>
-        <ul class="event-list">
-          <li><span class="date">LÉTA PÁNĚ 1066</span>Vévoda Knoty <span class="hl">převzal kontrolu nad českým knížectvím</span></li>
-        </ul>
+      <div class="player-card">
+        <div class="portrait">
+          <div class="placeholder">podobizna<br>Náčelníkova</div>
+        </div>
+        <div class="text">
+          <div class="name">Matej</div>
+          <div class="title">Náčelník kmene Krakow</div>
+          <ul>
+            <li>Ujal se <span class="hl">kmene krakovského</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
